@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My ADHD Assistant — AI Support via SMS</title>
+  <meta name="description" content="An SMS-based AI assistant designed to help people with ADHD manage daily tasks, reminders, and personal productivity — as naturally as texting a friend.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #1a1a2e; --ink-soft: #4a4a6a; --ink-faint: #8888aa;
+      --bg: #f7f6f2; --bg-card: #ffffff;
+      --accent: #3d6b8f; --accent-light: #e8f0f7; --accent-warm: #c87941;
+      --border: #e2e0d8; --radius: 12px; --max: 780px;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; min-height: 100vh; display: flex; flex-direction: column; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(247,246,242,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .nav-inner { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    main { flex: 1; max-width: var(--max); margin: 0 auto; width: 100%; padding: 3.5rem 2rem 5rem; }
+    h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 2.75rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1rem; }
+    h1 em { font-style: italic; color: var(--accent); }
+    h2 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--ink); margin: 2.5rem 0 0.75rem; letter-spacing: -0.01em; }
+    h3 { font-size: 1rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.4rem; }
+    p { color: var(--ink-soft); margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+    a { color: var(--accent); }
+    .hero-label { display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 0.3rem 0.75rem; border-radius: 100px; margin-bottom: 1.25rem; }
+    .hero-sub { font-size: 1.125rem; color: var(--ink-soft); max-width: 560px; margin-bottom: 2.5rem; font-weight: 300; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .card h3 { margin-top: 0; font-size: 0.95rem; }
+    .card p { font-size: 0.875rem; }
+    .steps { list-style: none; margin: 1.5rem 0; }
+    .steps li { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+    .steps li:last-child { border-bottom: none; }
+    .step-num { flex-shrink: 0; width: 28px; height: 28px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; margin-top: 2px; }
+    .step-text { font-size: 0.95rem; color: var(--ink-soft); }
+    .step-text strong { color: var(--ink); display: block; margin-bottom: 0.2rem; }
+    .notice { background: var(--accent-light); border-left: 3px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: 0.9rem; color: var(--ink-soft); }
+    .kw { display: inline-block; font-weight: 600; font-size: 0.85rem; background: var(--ink); color: var(--bg); padding: 0.15rem 0.5rem; border-radius: 4px; letter-spacing: 0.03em; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.8rem; color: var(--ink-faint); }
+    footer a { color: var(--ink-faint); }
+    footer nav { display: flex; justify-content: center; gap: 1.5rem; margin-top: 0.5rem; flex-wrap: wrap; background: none; border: none; padding: 0; position: static; }
+    footer nav a { font-size: 0.8rem; color: var(--ink-faint); font-weight: 400; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up  { animation: fadeUp 0.5s 0.0s ease both; }
+    .fade-up-2 { animation: fadeUp 0.5s 0.1s ease both; }
+    .fade-up-3 { animation: fadeUp 0.5s 0.2s ease both; }
+    .fade-up-4 { animation: fadeUp 0.5s 0.3s ease both; }
+    @media (max-width: 600px) { main { padding: 2rem 1.25rem 4rem; } .nav-links { gap: 1.25rem; } .card-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">My <span>ADHD</span> Assistant</a>
+    <ul class="nav-links">
+      <li><a href="/" class="active">About</a></li>
+      <li><a href="/privacy.html">Privacy</a></li>
+      <li><a href="/terms.html">Terms</a></li>
+      <li><a href="/opt-out.html">Help &amp; Opt-Out</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="hero-label fade-up">AI-Powered Personal Assistant via SMS</div>
+  <h1 class="fade-up-2">Your brain works differently.<br><em>So does your assistant.</em></h1>
+  <p class="hero-sub fade-up-3">My ADHD Assistant delivers AI-powered productivity support directly to your phone via text message — no apps to open, no dashboards to navigate. Just send a text, like messaging a friend.</p>
+
+  <hr class="divider fade-up-4">
+
+  <h2>Who this is for</h2>
+  <p>This service is designed for individuals who benefit from low-friction, always-available support for executive function and day-to-day task management — particularly those who find traditional productivity apps difficult to use consistently.</p>
+  <p>If you've tried every to-do app and still feel behind, My ADHD Assistant works with how your brain actually functions.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">💬</div>
+      <h3>Just text it</h3>
+      <p>No app switching. No login. Send a message and get a response in seconds.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <h3>Context-aware</h3>
+      <p>The assistant understands natural language and remembers what matters to you.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⏰</div>
+      <h3>Reminders that work</h3>
+      <p>Nudges, check-ins, and task prompts delivered when you need them.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li>
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Enroll</strong>You sign up and receive a dedicated My ADHD Assistant phone number.</div>
+    </li>
+    <li>
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Text naturally</strong>Send a message to your number — ask for reminders, capture tasks, check in on your day.</div>
+    </li>
+    <li>
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Get a response</strong>The AI assistant replies with support, prompts, or information — conversationally, not robotically.</div>
+    </li>
+  </ol>
+
+  <hr class="divider">
+
+  <h2>Opt-in &amp; messaging</h2>
+  <p>To use this service, you must be an enrolled subscriber. Enrollment requires your explicit consent to receive SMS messages. You will not receive any messages unless you have opted in through the My ADHD Assistant registration process.</p>
+
+  <div class="notice">
+    To stop receiving messages at any time, text <span class="kw">STOP</span> to your assigned number. You will receive one final confirmation message and no further messages will be sent.
+  </div>
+
+  <hr class="divider">
+
+  <h2>About FocusedSS, LLC</h2>
+  <p>My ADHD Assistant is operated by FocusedSS, LLC, a Minnesota-based company building practical tools for people who think differently.</p>
+  <p>Questions? Contact us at <a href="mailto:support@myadhdassistant.com">support@myadhdassistant.com</a></p>
+</main>
+
+<footer>
+  <div>&copy; 2025 FocusedSS, LLC &mdash; My ADHD Assistant</div>
+  <nav>
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="/terms.html">Terms of Service</a>
+    <a href="/opt-out.html">Help &amp; Opt-Out</a>
+    <a href="mailto:support@myadhdassistant.com">support@myadhdassistant.com</a>
+  </nav>
+</footer>
+
+</body>
+</html>

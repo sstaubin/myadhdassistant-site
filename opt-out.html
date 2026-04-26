@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help &amp; Opt-Out — My ADHD Assistant</title>
+  <meta name="description" content="How to stop receiving messages, get help, or manage your My ADHD Assistant subscription.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #1a1a2e; --ink-soft: #4a4a6a; --ink-faint: #8888aa;
+      --bg: #f7f6f2; --bg-card: #ffffff;
+      --accent: #3d6b8f; --accent-light: #e8f0f7;
+      --accent-green: #2e7d4f; --accent-green-light: #e6f4ec;
+      --border: #e2e0d8; --radius: 12px; --max: 780px;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; min-height: 100vh; display: flex; flex-direction: column; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(247,246,242,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .nav-inner { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    main { flex: 1; max-width: var(--max); margin: 0 auto; width: 100%; padding: 3.5rem 2rem 5rem; }
+    .page-label { display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 0.3rem 0.75rem; border-radius: 100px; margin-bottom: 1.25rem; }
+    h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.75rem, 4vw, 2.25rem); line-height: 1.2; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1rem; }
+    h2 { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--ink); margin: 2.25rem 0 0.6rem; letter-spacing: -0.01em; }
+    p { color: var(--ink-soft); margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+    a { color: var(--accent); }
+    .cmd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .cmd-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .cmd-card .kw { display: inline-block; font-weight: 700; font-size: 1rem; background: var(--ink); color: var(--bg); padding: 0.2rem 0.65rem; border-radius: 5px; letter-spacing: 0.05em; margin-bottom: 0.6rem; font-family: 'DM Sans', sans-serif; }
+    .cmd-card h3 { font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; }
+    .cmd-card p { font-size: 0.85rem; margin: 0; }
+    .stop-box { background: #fff8f6; border: 1px solid #f0d0c8; border-radius: var(--radius); padding: 1.75rem; margin: 1.5rem 0; }
+    .stop-box h3 { font-size: 1rem; font-weight: 600; color: #8b2a12; margin-bottom: 0.5rem; }
+    .stop-box p { font-size: 0.9rem; color: #6b3a2a; margin-bottom: 0; }
+    .start-box { background: var(--accent-green-light); border: 1px solid #b8dfc8; border-radius: var(--radius); padding: 1.75rem; margin: 1.5rem 0; }
+    .start-box h3 { font-size: 1rem; font-weight: 600; color: var(--accent-green); margin-bottom: 0.5rem; }
+    .start-box p { font-size: 0.9rem; color: #2a5a3a; margin-bottom: 0; }
+    .notice { background: var(--accent-light); border-left: 3px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: 0.9rem; color: var(--ink-soft); }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.8rem; color: var(--ink-faint); }
+    footer a { color: var(--ink-faint); }
+    footer nav { display: flex; justify-content: center; gap: 1.5rem; margin-top: 0.5rem; flex-wrap: wrap; background: none; border: none; padding: 0; position: static; }
+    footer nav a { font-size: 0.8rem; color: var(--ink-faint); font-weight: 400; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.5s ease both; }
+    @media (max-width: 600px) { main { padding: 2rem 1.25rem 4rem; } .nav-links { gap: 1.25rem; } .cmd-grid { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">My <span>ADHD</span> Assistant</a>
+    <ul class="nav-links">
+      <li><a href="/">About</a></li>
+      <li><a href="/privacy.html">Privacy</a></li>
+      <li><a href="/terms.html">Terms</a></li>
+      <li><a href="/opt-out.html" class="active">Help &amp; Opt-Out</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="fade-up">
+  <div class="page-label">Support</div>
+  <h1>Help &amp; Opt-Out</h1>
+  <p>Everything you need to manage your My ADHD Assistant messages. All controls work by texting a keyword to your assigned number.</p>
+
+  <h2>Text commands</h2>
+  <div class="cmd-grid">
+    <div class="cmd-card">
+      <div class="kw">STOP</div>
+      <h3>Stop all messages</h3>
+      <p>Immediately unsubscribes you. One confirmation message is sent, then nothing further.</p>
+    </div>
+    <div class="cmd-card">
+      <div class="kw">START</div>
+      <h3>Resume messages</h3>
+      <p>Re-subscribes you after opting out. You'll receive a confirmation when reactivated.</p>
+    </div>
+    <div class="cmd-card">
+      <div class="kw">HELP</div>
+      <h3>Get help via text</h3>
+      <p>Receive a short reply with contact info and available commands.</p>
+    </div>
+  </div>
+
+  <h2>Opting out</h2>
+  <div class="stop-box">
+    <h3>To stop all messages immediately</h3>
+    <p>Text <strong>STOP</strong> to your My ADHD Assistant number. You will receive one final confirmation message. No further messages will be sent to your number unless you re-subscribe by texting START.</p>
+  </div>
+  <p>This opt-out is permanent until you choose to re-subscribe. We will honor all opt-out requests within one message cycle.</p>
+
+  <h2>Resuming after opt-out</h2>
+  <div class="start-box">
+    <h3>To start receiving messages again</h3>
+    <p>Text <strong>START</strong> to your My ADHD Assistant number. You'll receive a confirmation when your subscription is reactivated.</p>
+  </div>
+
+  <h2>Message frequency &amp; rates</h2>
+  <p>Message frequency varies based on your usage and any reminders or check-ins you have configured. You control the pace — the assistant responds to your messages and sends nudges only as configured.</p>
+  <p>Standard message and data rates may apply depending on your mobile carrier plan. My ADHD Assistant does not charge separately for SMS delivery.</p>
+
+  <hr class="divider">
+
+  <h2>Contact support</h2>
+  <p>If text commands don't resolve your issue, or if you have questions about your account or data, please contact us directly:</p>
+  <div class="notice">
+    <strong>Email:</strong> <a href="mailto:support@myadhdassistant.com">support@myadhdassistant.com</a><br>
+    We aim to respond within one business day.
+  </div>
+  <p>To request deletion of your personal data, email us with the subject line <strong>"Data Deletion Request"</strong> and include the phone number associated with your account.</p>
+</main>
+
+<footer>
+  <div>&copy; 2025 FocusedSS, LLC &mdash; My ADHD Assistant</div>
+  <nav>
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="/terms.html">Terms of Service</a>
+    <a href="/opt-out.html">Help &amp; Opt-Out</a>
+    <a href="mailto:support@myadhdassistant.com">support@myadhdassistant.com</a>
+  </nav>
+</footer>
+
+</body>
+</html>
